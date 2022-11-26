@@ -23,7 +23,15 @@
   "dependencies": {
     "@nestjs/common": "^9.0.0",
     "@nestjs/core": "^9.0.0",
+    "@nestjs/mapped-types": "*",
     "@nestjs/platform-express": "^9.0.0",
+    "@nestjs/terminus": "9.1.4",
+    "@willsoto/nestjs-objection": "8.1.0",
+    "dotenv": "16.0.3",
+    "helmet": "6.0.0",
+    "knex": "2.3.0",
+    "objection": "3.0.1",
+    "pg": "8.8.0",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0"
