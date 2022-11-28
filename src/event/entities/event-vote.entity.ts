@@ -19,7 +19,7 @@ export class EventVote extends BaseModel {
       properties: {
         id: { type: 'integer' },
         name: { type: 'string', minLength: 1, maxLength: 255 },
-        eventDateId: { type: 'number'},
+        eventDateId: { type: 'number' },
       },
     };
   }
@@ -32,8 +32,8 @@ export class EventVote extends BaseModel {
         join: {
           from: 'event_votes.event_date_id',
           to: 'event_dates.id',
-        }
-      }
+        },
+      },
     };
   }
 }

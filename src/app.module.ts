@@ -9,10 +9,15 @@ import configuration from 'config/configuration';
 import database from 'config/database';
 
 @Module({
-  imports: [EventModule, HealthModule, DatabaseModule, ConfigModule.forRoot({
-    load: [configuration, database],
-  })],
+  imports: [
+    EventModule,
+    HealthModule,
+    DatabaseModule,
+    ConfigModule.forRoot({
+      load: [configuration, database],
+    }),
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}

@@ -1,5 +1,5 @@
-import { ApiProperty } from "@nestjs/swagger";
-import { SingleDate } from "src/common/dto/single-date.dto";
+import { ApiProperty } from '@nestjs/swagger';
+import { SingleDate } from 'src/common/dto/single-date.dto';
 
 export class ResultsDto {
   @ApiProperty({
@@ -16,10 +16,12 @@ export class ResultsDto {
 
   @ApiProperty({
     description: 'List of dates and votes for them',
-    example: [{
-      date: '2051-12-24',
-      people: ['John', 'Julia', 'Paul', 'Daisy'],
-    }],
+    example: [
+      {
+        date: '2051-12-24',
+        people: ['John', 'Julia', 'Paul', 'Daisy'],
+      },
+    ],
     isArray: true,
   })
   suitableDates: Array<SingleDate>;

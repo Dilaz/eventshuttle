@@ -5,7 +5,6 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import helmet from 'helmet';
 import { AppModule } from './app.module';
 
-
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
@@ -17,11 +16,12 @@ async function bootstrap() {
   });
 
   // Add helmet for security
-  app.use(helmet({
-    // Content security is not required for an API and it might mess with swagger
-    contentSecurityPolicy: false,
-  }));
-
+  app.use(
+    helmet({
+      // Content security is not required for an API and it might mess with swagger
+      contentSecurityPolicy: false,
+    }),
+  );
 
   // Add global prefix and exclude healthcheck & documentation
   app.setGlobalPrefix('api', {
@@ -43,10 +43,12 @@ async function bootstrap() {
     SwaggerModule.setup('docs', app, document);
   }
 
-  app.useGlobalPipes(new ValidationPipe({
-    whitelist: true,
-    enableDebugMessages: configService.get<string>('env') === 'development',
-  }));
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      enableDebugMessages: configService.get<string>('env') === 'development',
+    }),
+  );
 
   // Use the port from env, default to 3000
   await app.listen(configService.get<number>('port'));

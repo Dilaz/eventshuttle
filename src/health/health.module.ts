@@ -6,8 +6,8 @@ import { PrimaryDatabaseHealthIndicator } from './db.health-indicator';
 import { HealthController } from './health.controller';
 
 @Module({
-    imports: [TerminusModule, HttpModule, DatabaseModule],
-    controllers: [HealthController],
-    providers: [PrimaryDatabaseHealthIndicator],
+  imports: [TerminusModule, HttpModule, DatabaseModule],
+  controllers: [HealthController],
+  providers: [PrimaryDatabaseHealthIndicator],
 })
 export class HealthModule {}

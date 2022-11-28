@@ -1,4 +1,7 @@
+import { HttpModule } from '@nestjs/axios';
+import { TerminusModule } from '@nestjs/terminus';
 import { Test, TestingModule } from '@nestjs/testing';
+import { DatabaseModule } from 'src/database/database.module';
 import { HealthController } from './health.controller';
 
 describe('HealthController', () => {

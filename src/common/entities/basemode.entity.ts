@@ -1,4 +1,4 @@
-import { Model, snakeCaseMappers } from "objection";
+import { Model, snakeCaseMappers } from 'objection';
 import * as _ from 'lodash';
 
 export class BaseModel extends Model {

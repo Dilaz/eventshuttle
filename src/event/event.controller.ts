@@ -1,8 +1,12 @@
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import {
-  Body, Controller,
-  Get, Param, Post
-} from '@nestjs/common';
-import { ApiBody, ApiCreatedResponse, ApiNotFoundResponse, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
+  ApiBody,
+  ApiCreatedResponse,
+  ApiNotFoundResponse,
+  ApiParam,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { CreateEventDto } from './dto/create-event.dto';
 import { EventDto, EventListDto, GetSingleEventDto } from './dto/event.dto';
 import { ResultsDto } from './dto/results.dto';
@@ -26,7 +30,7 @@ export class EventController {
         id: {
           type: 'number',
           example: 1,
-        } ,
+        },
       },
     },
   })
@@ -72,7 +76,7 @@ export class EventController {
   @ApiResponse({
     status: 200,
     description: 'Votes a single date',
-    type: [ GetSingleEventDto ],
+    type: [GetSingleEventDto],
   })
   @ApiNotFoundResponse({ description: 'Event not found' })
   @ApiBody({ description: 'Vote for dates', type: VoteDateDto })
@@ -89,7 +93,7 @@ export class EventController {
   @ApiResponse({
     status: 200,
     description: 'Responds with dates that are suitable for all participants.',
-    type: [ ResultsDto ],
+    type: [ResultsDto],
   })
   @ApiNotFoundResponse({ description: 'Event not found' })
   results(@Param('id') id: number) {

@@ -1,6 +1,10 @@
-import { Inject, Injectable } from "@nestjs/common";
-import { HealthIndicatorResult, HealthIndicator, HealthCheckError } from "@nestjs/terminus";
-import { Connection, KNEX_CONNECTION } from "@willsoto/nestjs-objection";
+import { Inject, Injectable } from '@nestjs/common';
+import {
+  HealthIndicatorResult,
+  HealthIndicator,
+  HealthCheckError,
+} from '@nestjs/terminus';
+import { Connection, KNEX_CONNECTION } from '@willsoto/nestjs-objection';
 
 @Injectable()
 export class PrimaryDatabaseHealthIndicator extends HealthIndicator {
@@ -8,13 +12,13 @@ export class PrimaryDatabaseHealthIndicator extends HealthIndicator {
     super();
   }
 
-  async ping(key: string = "db-primary"): Promise<HealthIndicatorResult> {
+  async ping(key: string = 'db-primary'): Promise<HealthIndicatorResult> {
     try {
-      await this.connection.raw("SELECT 1");
+      await this.connection.raw('SELECT 1');
       return super.getStatus(key, true);
     } catch (error) {
       const status = super.getStatus(key, false, { message: error.message });
-      throw new HealthCheckError("Unable to connect to database", status);
+      throw new HealthCheckError('Unable to connect to database', status);
     }
   }
 }

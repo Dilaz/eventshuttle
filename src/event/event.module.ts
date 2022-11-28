@@ -9,8 +9,6 @@ import { EventDate } from './entities/event_date.entity';
 @Module({
   controllers: [EventController],
   providers: [EventService],
-  imports: [
-    ObjectionModule.forFeature([Event, EventVote, EventDate]),
-  ]
+  imports: [ObjectionModule.forFeature([Event, EventVote, EventDate])],
 })
 export class EventModule {}

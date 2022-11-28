@@ -31,8 +31,8 @@ export class Event extends BaseModel {
         join: {
           from: 'events.id',
           to: 'event_dates.event_id',
-        }
-      }
+        },
+      },
     };
   }
 }

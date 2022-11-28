@@ -11,24 +11,29 @@ import { GetSingleEventDto } from './dto/event.dto';
 
 @Injectable()
 export class EventService {
-
   constructor(
     @Inject(Event) private readonly eventModel: typeof Event,
     @Inject(EventVote) private readonly eventVoteModel: typeof EventVote,
     @Inject(EventDate) private readonly eventDateModel: typeof EventDate,
-  ) { }
+  ) {}
   /**
    * Creates a new event
    * @param createEventDto
    * @returns
    */
   async create(createEventDto: CreateEventDto) {
-    return _.pick(await this.eventModel.query()
-      .returning('id')
-      .insertGraph({
-        name: createEventDto.name,
-        dates: createEventDto.dates.map(date => ({ date: formatDate(new Date(date)), }) as EventDate),
-      }), ['id']);
+    return _.pick(
+      await this.eventModel
+        .query()
+        .returning('id')
+        .insertGraph({
+          name: createEventDto.name,
+          dates: createEventDto.dates.map(
+            (date) => ({ date: formatDate(new Date(date)) } as EventDate),
+          ),
+        }),
+      ['id'],
+    );
   }
 
   /**
@@ -45,7 +50,9 @@ export class EventService {
    * @returns Found event
    */
   async findOne(id: number): Promise<GetSingleEventDto> {
-    const event = await this.eventModel.query().findById(id)
+    const event = await this.eventModel
+      .query()
+      .findById(id)
       .withGraphFetched('dates.votes');
 
     if (!event) {
@@ -56,19 +63,20 @@ export class EventService {
     return {
       id: event.id,
       name: event.name,
-      dates: event.dates.map(date => date.date),
+      dates: event.dates.map((date) => date.date),
       // Filter empty dates
-      votes: event.dates.filter(date => date.votes.length)
-      .map(date => ({
-        date: date.date,
-        people: date.votes.map(vote => vote.name),
-      })),
+      votes: event.dates
+        .filter((date) => date.votes.length)
+        .map((date) => ({
+          date: date.date,
+          people: date.votes.map((vote) => vote.name),
+        })),
     };
   }
 
   /**
    * Returns results for the vote
-   * @param id ID 
+   * @param id ID
    */
   async getResults(id: number): Promise<ResultsDto> {
     const event = await this.findOne(id);
@@ -87,7 +95,9 @@ export class EventService {
       id: event.id,
       name: event.name,
       // Filter out all dates with only partial list of attendees
-      suitableDates: event.votes.filter(votes => votes.people.length === allUsers.size),
+      suitableDates: event.votes.filter(
+        (votes) => votes.people.length === allUsers.size,
+      ),
     };
   }
 
@@ -98,15 +108,23 @@ export class EventService {
    */
   async vote(id: number, vote: VoteDateDto): Promise<GetSingleEventDto> {
     // Find all matching dates
-    const dates = await this.eventDateModel.query()
-    .whereIn('date', vote.votes)
-    .andWhere('eventId', id);
+    const dates = await this.eventDateModel
+      .query()
+      .whereIn('date', vote.votes)
+      .andWhere('eventId', id);
 
     // Add vote to each given date and ignore duplicate name errors
-    await Promise.all(dates.map(date => this.eventVoteModel.query().insert({
-      eventDateId: date.id,
-      name: vote.name
-    }).catch(e => console.error(e))));
+    await Promise.all(
+      dates.map((date) =>
+        this.eventVoteModel
+          .query()
+          .insert({
+            eventDateId: date.id,
+            name: vote.name,
+          })
+          .catch((e) => console.error(e)),
+      ),
+    );
 
     // Fetch the event with updated votes
     const event = await this.findOne(id);
