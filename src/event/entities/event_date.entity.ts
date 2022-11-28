@@ -1,4 +1,4 @@
-import { Model, QueryContext, snakeCaseMappers } from 'objection';
+import { Model, snakeCaseMappers } from 'objection';
 import { formatDate } from '../../common/util';
 import { EventVote } from './event-vote.entity';
 
@@ -28,11 +28,12 @@ export class EventDate extends Model {
     return snakeCaseMappers();
   }
 
-  $afterFind(queryContext: QueryContext): void {
+  $afterFind(): void {
     this.date = formatDate(new Date(this.date));
   }
 
   static get relationMappings() {
+    /* eslint-disable @typescript-eslint/no-var-requires */
     const Event = require('./event.entity');
     return {
       events: {

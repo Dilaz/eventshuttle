@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
-import { IsArray, IsNumber, IsString, MaxLength } from 'class-validator';
+import { IsArray, IsNumber, IsString } from 'class-validator';
 import { SingleDate } from 'src/common/dto/single-date.dto';
 
 export class EventListDto {

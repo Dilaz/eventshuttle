@@ -38,3 +38,8 @@ $ npm run test:cov
 ```bash
 docker-compose up -d
 ```
+
+## Run migrations
+```bash
+npx knex migrate:latest
+```

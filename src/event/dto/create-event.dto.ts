@@ -1,12 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
-import {
-  ArrayMinSize,
-  IsArray,
-  IsDate,
-  Length,
-  ValidateNested,
-} from 'class-validator';
+import { ArrayMinSize, IsArray, IsDate, Length } from 'class-validator';
 export class CreateEventDto {
   @ApiProperty({
     description: 'Event name',

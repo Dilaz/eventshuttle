@@ -10,10 +10,16 @@ describe('EventService', () => {
 
   const mockEventModel = {
     id: 1,
-    query: jest.fn().mockImplementation(dto => ({ ...mockEventModel, ...dto})),
-    returning: jest.fn().mockImplementation(dto => ({...mockEventModel, ...dto})),
-    insertGraph: jest.fn().mockImplementation(dto => ({...mockEventModel, ...dto})),
-  }
+    query: jest
+      .fn()
+      .mockImplementation((dto) => ({ ...mockEventModel, ...dto })),
+    returning: jest
+      .fn()
+      .mockImplementation((dto) => ({ ...mockEventModel, ...dto })),
+    insertGraph: jest
+      .fn()
+      .mockImplementation((dto) => ({ ...mockEventModel, ...dto })),
+  };
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -30,7 +36,7 @@ describe('EventService', () => {
         {
           provide: EventDate,
           useValue: {},
-        }
+        },
       ],
       imports: [ObjectionModule.forFeature([Event, EventVote, EventDate])],
     }).compile();
@@ -43,11 +49,13 @@ describe('EventService', () => {
   });
 
   it('should create a new event and return the id', async () => {
-    expect(await service.create({
-      name: 'A super great birthday party',
-      dates: ['2051-12-24', '2051-12-25', '2051-12-26'],
-    })).toEqual({
+    expect(
+      await service.create({
+        name: 'A super great birthday party',
+        dates: ['2051-12-24', '2051-12-25', '2051-12-26'],
+      }),
+    ).toEqual({
       id: expect.any(Number),
-    })
-  })
+    });
+  });
 });

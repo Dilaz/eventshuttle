@@ -12,7 +12,7 @@ export class PrimaryDatabaseHealthIndicator extends HealthIndicator {
     super();
   }
 
-  async ping(key: string = 'db-primary'): Promise<HealthIndicatorResult> {
+  async ping(key = 'db-primary'): Promise<HealthIndicatorResult> {
     try {
       await this.connection.raw('SELECT 1');
       return super.getStatus(key, true);

@@ -6,9 +6,7 @@ import {
   IsDate,
   IsString,
   Length,
-  Min,
 } from 'class-validator';
-import { SingleDate } from 'src/common/dto/single-date.dto';
 
 export class VoteDateDto {
   @ApiProperty({

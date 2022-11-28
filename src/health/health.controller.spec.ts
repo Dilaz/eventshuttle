@@ -3,7 +3,6 @@ import { HttpHealthIndicator, TerminusModule } from '@nestjs/terminus';
 import { Test, TestingModule } from '@nestjs/testing';
 import { PrimaryDatabaseHealthIndicator } from './db.health-indicator';
 import { HealthController } from './health.controller';
-import Knex from 'knex'
 
 describe('HealthController', () => {
   let controller: HealthController;
@@ -19,12 +18,12 @@ describe('HealthController', () => {
   };
 
   const mockHttpIndicator = {
-    pingCheck: jest.fn((name, host) => ({
+    pingCheck: jest.fn((name) => ({
       [name]: {
         status: 'up',
-      }
+      },
     })),
-  }
+  };
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -32,11 +31,11 @@ describe('HealthController', () => {
       providers: [PrimaryDatabaseHealthIndicator],
       controllers: [HealthController],
     })
-    .overrideProvider(PrimaryDatabaseHealthIndicator)
-    .useValue(mockDbIndicator)
-    .overrideProvider(HttpHealthIndicator)
-    .useValue(mockHttpIndicator)
-    .compile();
+      .overrideProvider(PrimaryDatabaseHealthIndicator)
+      .useValue(mockDbIndicator)
+      .overrideProvider(HttpHealthIndicator)
+      .useValue(mockHttpIndicator)
+      .compile();
 
     controller = module.get<HealthController>(HealthController);
   });
@@ -46,7 +45,9 @@ describe('HealthController', () => {
   });
 
   it('should have ok status', async () => {
-    expect(await controller.check()).toEqual(expect.objectContaining({status: 'ok' }));
+    expect(await controller.check()).toEqual(
+      expect.objectContaining({ status: 'ok' }),
+    );
     expect(mockDbIndicator.ping).toBeCalled();
-  })
+  });
 });

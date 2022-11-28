@@ -8,7 +8,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { CreateEventDto } from './dto/create-event.dto';
-import { EventDto, EventListDto, GetSingleEventDto } from './dto/event.dto';
+import { EventListDto, GetSingleEventDto } from './dto/event.dto';
 import { ResultsDto } from './dto/results.dto';
 import { VoteDateDto } from './dto/vote-event.dto';
 import { EventService } from './event.service';

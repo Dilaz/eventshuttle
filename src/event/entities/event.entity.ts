@@ -1,4 +1,4 @@
-import { Model, snakeCaseMappers } from 'objection';
+import { Model } from 'objection';
 import { BaseModel } from '../../common/entities/basemode.entity';
 import { EventDate } from './event_date.entity';
 

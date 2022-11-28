@@ -1,6 +1,4 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { fn } from 'objection';
-import { VoteDateDto } from './dto/vote-event.dto';
 import { EventController } from './event.controller';
 import { EventService } from './event.service';
 
@@ -8,10 +6,10 @@ describe('EventController', () => {
   let controller: EventController;
 
   const mockEventService = {
-    create: jest.fn(dto => {
+    create: jest.fn(() => {
       return {
         id: 1,
-      }
+      };
     }),
     findAll: jest.fn(() => {
       return [
@@ -38,7 +36,7 @@ describe('EventController', () => {
         ],
       };
     }),
-    vote: jest.fn((id: number, vote: VoteDateDto) => {
+    vote: jest.fn((id: number) => {
       return mockEventService.findOne(id);
     }),
     getResults: jest.fn((id: number) => {
@@ -73,10 +71,12 @@ describe('EventController', () => {
 
   it('should create an event', () => {
     expect(controller.create).toBeDefined();
-    expect(controller.create({
-      name: 'A super great birthday party',
-      dates: ['2051-12-24', '2051-12-25', '2051-12-26'],
-    })).toEqual({
+    expect(
+      controller.create({
+        name: 'A super great birthday party',
+        dates: ['2051-12-24', '2051-12-25', '2051-12-26'],
+      }),
+    ).toEqual({
       id: 1,
     });
 
@@ -94,7 +94,7 @@ describe('EventController', () => {
           id: 2,
           name: 'Another event',
         },
-      ]
+      ],
     });
     expect(mockEventService.findAll).toBeCalled();
   });
@@ -116,7 +116,9 @@ describe('EventController', () => {
 
   it('should save a vote', async () => {
     expect(controller.vote).toBeDefined();
-    expect(await controller.vote(1, { name: 'John', votes: ['2051-12-24'] })).toEqual({
+    expect(
+      await controller.vote(1, { name: 'John', votes: ['2051-12-24'] }),
+    ).toEqual({
       id: 1,
       name: 'A super great birthday party',
       dates: ['2051-12-24', '2051-12-25', '2051-12-26'],
@@ -132,14 +134,14 @@ describe('EventController', () => {
   it('should show results', async () => {
     expect(controller.results).toBeDefined();
     expect(await controller.results(1)).toEqual({
-        id: 1,
-        name: 'A super great birthday party',
-        suitableDates: [
-          {
-            date: '2051-12-24',
-            people: ['John', 'Julia', 'Paul', 'Daisy'],
-          },
-        ],
+      id: 1,
+      name: 'A super great birthday party',
+      suitableDates: [
+        {
+          date: '2051-12-24',
+          people: ['John', 'Julia', 'Paul', 'Daisy'],
+        },
+      ],
     });
   });
 });
