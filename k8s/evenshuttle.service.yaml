@@ -36,3 +36,8 @@ spec:
       - name: eventshuttle
         image: localhost/eventshuttle:latest
         imagePullPolicy: IfNotPresent
+        envFrom:
+          - configMapRef:
+              name: eventshuttle-config
+          - secretRef:
+              name: eventshuttle-secrets

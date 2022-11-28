@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: eventshuttle-config
+  namespace: eventshuttle
+  labels:
+    app: eventshuttle
+data:
+  NODE_ENV: development
+  PORT: 3000
+  POSTGRES_DB: eventshuttle
+  POSTGRES_USER: eventshuttle-dev
+  POSTGRES_PORT: 5432
+  POSTGRES_HOST: eventshuttle-postgresql.eventshuttle.svc.cluster.local
