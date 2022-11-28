@@ -40,24 +40,24 @@ spec:
           - containerPort: 3000
             protocol: TCP
         readinessProbe:
-            httpGet:
-              path: /health
-              port: 3000
-            initialDelaySeconds: 5
-            periodSeconds: 10
-          livenessProbe:
-            httpGet:
-              path: /health
-              port: 3000
-            initialDelaySeconds: 60
-            periodSeconds: 20
-          resources:
-            requests:
-              memory: 100Mi
-              cpu: 5m
-            limits:
-              memory: 150Mi
-              cpu: 15m
+          httpGet:
+            path: /health
+            port: 3000
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 3000
+          initialDelaySeconds: 60
+          periodSeconds: 20
+        resources:
+          requests:
+            memory: 100Mi
+            cpu: 5m
+          limits:
+            memory: 150Mi
+            cpu: 15m
         envFrom:
           - configMapRef:
               name: eventshuttle-config
