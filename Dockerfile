@@ -17,6 +17,4 @@ COPY --from=0 /usr/src/app/dist ./dist
 
 EXPOSE 3000
 
-ENTRYPOINT ["node", "dist/main.js"]
-
-
+ENTRYPOINT ["node", "dist/src/main.js"]
