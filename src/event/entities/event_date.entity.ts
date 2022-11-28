@@ -1,5 +1,7 @@
-import { Model, snakeCaseMappers } from 'objection';
-import { EventVote } from '../event-vote/entities/event-vote.entity';
+import { Model, QueryContext, snakeCaseMappers } from 'objection';
+import { BaseModel } from 'src/common/entities/basemode.entity';
+import { formatDate } from 'src/common/util';
+import { EventVote } from './event-vote.entity';
 
 export class EventDate extends Model {
   id: number;
@@ -11,41 +13,45 @@ export class EventDate extends Model {
     return 'event_dates';
   }
 
+  static get jsonSchema() {
+    return {
+      type: 'object',
+      required: ['date'],
+
+      properties: {
+        id: { type: 'integer' },
+        date: { type: 'string' },
+      },
+    };
+  }
+  
   static get columnNameMappers() {
     return snakeCaseMappers();
   }
 
-static get jsonSchema() {
-        return {
-            type: 'object',
-            required: ['name'],
+  $afterFind(queryContext: QueryContext): void {
+    this.date = formatDate(new Date(this.date));
+  }
 
-            properties: {
-                id: { type: 'integer' },
-                name: { type: 'string', minLength: 1, maxLength: 255 },
-
-                dates: { type: 'date', },
-            },
-        };
-    }
-
-    static get relationMappings() {
+  static get relationMappings() {
+    const Event = require('./event.entity');
     return {
-      dates: {
+      events: {
         relation: Model.BelongsToOneRelation,
         modelClass: Event,
         join: {
-          from: 'events.id',
-          to: 'event_dates.event_id',
-        }
+          from: 'event_dates.eventId',
+          to: 'event.id',
         },
-        votes: {
-            relation: Model.HasManyRelation,
-            modelClass: EventVote,
-            join: {
-                from: 'event_dates.id',
-                to: 'event_votes.eventDateId',
-            }
-        }
+      },
+      votes: {
+        relation: Model.HasManyRelation,
+        modelClass: EventVote,
+        join: {
+          from: 'event_dates.id',
+          to: 'event_votes.eventDateId',
+        },
+      },
     };
+  }
 }

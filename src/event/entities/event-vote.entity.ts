@@ -1,39 +1,39 @@
-import { Model, snakeCaseMappers } from 'objection';
+import { Model } from 'objection';
+import { BaseModel } from 'src/common/entities/basemode.entity';
+import { EventDate } from './event_date.entity';
 
-export class EventVote extends Model {
+export class EventVote extends BaseModel {
   id: number;
+  name: string;
+  eventDateId: number;
 
   static get tableName() {
     return 'event_votes';
   }
 
-  static get columnNameMappers() {
-    return snakeCaseMappers();
+  static get jsonSchema() {
+    return {
+      type: 'object',
+      required: ['name'],
+
+      properties: {
+        id: { type: 'integer' },
+        name: { type: 'string', minLength: 1, maxLength: 255 },
+        eventDateId: { type: 'number'},
+      },
+    };
   }
 
-    static get jsonSchema() {
-        return {
-            type: 'object',
-            required: ['name'],
-
-            properties: {
-                id: { type: 'integer' },
-                name: { type: 'string', minLength: 1, maxLength: 255 },
-
-                dates: { type: 'date', },
-            },
-        };
-    }
-
-    static get relationMappings() {
+  static get relationMappings() {
     return {
       dates: {
-        relation: Model.HasManyRelation,
+        relation: Model.BelongsToOneRelation,
         modelClass: EventDate,
         join: {
-          from: 'events.id',
-          to: 'event_dates.event_id',
+          from: 'event_votes.event_date_id',
+          to: 'event_dates.id',
         }
       }
     };
+  }
 }

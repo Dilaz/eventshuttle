@@ -7,7 +7,7 @@ exports.up = function (knex) {
     table.increments('id');
 
     table
-      .integer('eventDateId')
+      .integer('event_id')
       .notNullable()
       .unsigned()
       .references('id')

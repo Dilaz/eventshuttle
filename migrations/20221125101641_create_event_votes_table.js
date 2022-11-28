@@ -7,15 +7,17 @@ exports.up = function (knex) {
         table.increments('id');
         table.string('name').notNullable().defaultTo('');
         table
-            .integer('eventId')
+            .integer('event_date_id')
             .notNullable()
             .unsigned()
             .references('id')
-            .inTable('events')
+            .inTable('event_dates')
             .onDelete('CASCADE')
             .onUpdate('CASCADE');
 
         table.timestamps();
+
+        table.unique(['event_date_id', 'name']);
     });
 };
 
