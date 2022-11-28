@@ -1,0 +1,38 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: eventshuttle
+  namespace: eventshuttle
+  labels:
+    app: eventshuttle
+spec:
+  ports:
+    - port: 3000
+      protocol: TCP
+      targetPort: 3000
+  selector:
+    app: eventshuttle
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: eventshuttle
+  namespace: eventshuttle
+  labels:
+    app: eventshuttle
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: eventshuttle
+  template:
+    metadata:
+      labels:
+        app: eventshuttle
+    spec:
+      containers:
+      - name: eventshuttle
+        image: localhost/eventshuttle:latest
+        imagePullPolicy: IfNotPresent
