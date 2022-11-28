@@ -1,5 +1,5 @@
 import { Model } from 'objection';
-import { BaseModel } from 'src/common/entities/basemode.entity';
+import { BaseModel } from '../../common/entities/basemode.entity';
 import { EventDate } from './event_date.entity';
 
 export class EventVote extends BaseModel {

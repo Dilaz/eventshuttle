@@ -1,16 +1,42 @@
 import { HttpModule } from '@nestjs/axios';
-import { TerminusModule } from '@nestjs/terminus';
+import { HttpHealthIndicator, TerminusModule } from '@nestjs/terminus';
 import { Test, TestingModule } from '@nestjs/testing';
-import { DatabaseModule } from 'src/database/database.module';
+import { PrimaryDatabaseHealthIndicator } from './db.health-indicator';
 import { HealthController } from './health.controller';
+import Knex from 'knex'
 
 describe('HealthController', () => {
   let controller: HealthController;
 
+  jest.mock('knex');
+
+  const mockDbIndicator = {
+    ping: jest.fn(() => ({
+      database: {
+        status: 'up',
+      },
+    })),
+  };
+
+  const mockHttpIndicator = {
+    pingCheck: jest.fn((name, host) => ({
+      [name]: {
+        status: 'up',
+      }
+    })),
+  }
+
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
+      imports: [TerminusModule, HttpModule],
+      providers: [PrimaryDatabaseHealthIndicator],
       controllers: [HealthController],
-    }).compile();
+    })
+    .overrideProvider(PrimaryDatabaseHealthIndicator)
+    .useValue(mockDbIndicator)
+    .overrideProvider(HttpHealthIndicator)
+    .useValue(mockHttpIndicator)
+    .compile();
 
     controller = module.get<HealthController>(HealthController);
   });
@@ -18,4 +44,9 @@ describe('HealthController', () => {
   it('should be defined', () => {
     expect(controller).toBeDefined();
   });
+
+  it('should have ok status', async () => {
+    expect(await controller.check()).toEqual(expect.objectContaining({status: 'ok' }));
+    expect(mockDbIndicator.ping).toBeCalled();
+  })
 });

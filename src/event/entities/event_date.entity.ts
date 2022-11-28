@@ -1,6 +1,5 @@
 import { Model, QueryContext, snakeCaseMappers } from 'objection';
-import { BaseModel } from 'src/common/entities/basemode.entity';
-import { formatDate } from 'src/common/util';
+import { formatDate } from '../../common/util';
 import { EventVote } from './event-vote.entity';
 
 export class EventDate extends Model {

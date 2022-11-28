@@ -25,7 +25,7 @@ export class HealthController {
       () => this.http.pingCheck('google', 'https://google.com'),
       () => this.http.pingCheck('yle.fi', 'https://yle.fi'),
       () => this.db.ping('database'),
-      () => this.memory.checkHeap('memory_heap', 150 * 1024 * 1024),
+      () => this.memory.checkHeap('memory_heap', 250 * 1024 * 1024),
     ]);
   }
 }

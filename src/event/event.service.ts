@@ -1,13 +1,13 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
-import { formatDate } from 'src/common/util';
-import { CreateEventDto } from './dto/create-event.dto';
-import { Event } from './entities/event.entity';
-import { EventDate } from './entities/event_date.entity';
 import * as _ from 'lodash';
+import { formatDate } from '../common/util';
+import { CreateEventDto } from './dto/create-event.dto';
+import { GetSingleEventDto } from './dto/event.dto';
+import { ResultsDto } from './dto/results.dto';
 import { VoteDateDto } from './dto/vote-event.dto';
 import { EventVote } from './entities/event-vote.entity';
-import { ResultsDto } from './dto/results.dto';
-import { GetSingleEventDto } from './dto/event.dto';
+import { Event } from './entities/event.entity';
+import { EventDate } from './entities/event_date.entity';
 
 @Injectable()
 export class EventService {

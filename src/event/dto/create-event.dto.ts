@@ -26,5 +26,5 @@ export class CreateEventDto {
   @IsArray()
   @ArrayMinSize(2)
   @Type(() => IsDate)
-  dates: Array<Date>;
+  dates: Array<string>;
 }
