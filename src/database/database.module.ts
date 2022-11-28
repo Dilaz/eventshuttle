@@ -3,9 +3,9 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ObjectionModule } from '@willsoto/nestjs-objection';
 import { Knex } from 'knex';
 import { knexSnakeCaseMappers } from 'objection';
-import { EventVote } from 'src/event/entities/event-vote.entity';
-import { Event } from 'src/event/entities/event.entity';
-import { EventDate } from 'src/event/entities/event_date.entity';
+import { EventVote } from '../event/entities/event-vote.entity';
+import { Event } from '../event/entities/event.entity';
+import { EventDate } from '../event/entities/event_date.entity';
 
 @Module({
   imports: [

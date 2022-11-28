@@ -5,8 +5,8 @@ import { EventModule } from './event/event.module';
 import { HealthModule } from './health/health.module';
 import { DatabaseModule } from './database/database.module';
 import { ConfigModule } from '@nestjs/config';
-import configuration from 'config/configuration';
-import database from 'config/database';
+import configuration from '../config/configuration';
+import database from '../config/database';
 
 @Module({
   imports: [

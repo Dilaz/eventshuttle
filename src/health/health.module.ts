@@ -1,7 +1,7 @@
 import { HttpModule } from '@nestjs/axios';
 import { Module } from '@nestjs/common';
 import { TerminusModule } from '@nestjs/terminus';
-import { DatabaseModule } from 'src/database/database.module';
+import { DatabaseModule } from '../database/database.module';
 import { PrimaryDatabaseHealthIndicator } from './db.health-indicator';
 import { HealthController } from './health.controller';
 
